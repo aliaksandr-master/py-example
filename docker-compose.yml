@@ -1,0 +1,48 @@
+version: "2.3"
+
+services:
+#    db:
+#        image: postgres:11.0
+#        restart: always
+#        env_file:
+#          - .env
+#        environment:
+#            PGDATA: /var/lib/postgresql/data/pgdata
+#        ports:
+#            - 5434:5432
+#        volumes:
+#            - ./db/db-data:/var/lib/postgresql/data
+
+    rabbitmq:
+        hostname: rabbitmq
+        image: rabbitmq:3.7-management
+        restart: always
+        ports:
+            - 5672:5672
+            - 15672:15672
+        env_file:
+          - .env
+        networks:
+          - queue
+
+    worker:
+        env_file:
+            - .env
+        restart: always
+        build:
+            context: .
+            dockerfile: ./app_celery/Dockerfile
+        volumes:
+            - ./app_celery:/app
+        working_dir: /app
+        command: /bin/bash -c "celery -A tasks worker --loglevel=info"
+        links:
+            - rabbitmq
+        networks:
+            - queue
+        depends_on:
+            - rabbitmq
+
+networks:
+  queue:
+      driver: "bridge"
