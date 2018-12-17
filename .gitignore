@@ -1,0 +1,17 @@
+# Add any directories, files, or patterns you don't want to be tracked by version control
+
+node_modules/
+.tmp/
+.var/
+.idea/
+
+.DS_Store
+*.xml
+*.iml
+.name
+*.orig
+*scsslint_tmp*
+*_REMOTE_*.*
+*_BASE_*.*
+*_LOCAL_*.*
+*_BACKUP_*.*
