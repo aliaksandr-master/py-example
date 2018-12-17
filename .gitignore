@@ -15,3 +15,5 @@ node_modules/
 *_BASE_*.*
 *_LOCAL_*.*
 *_BACKUP_*.*
+
+__pycache__
